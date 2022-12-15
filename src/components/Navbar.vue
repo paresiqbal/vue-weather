@@ -61,16 +61,13 @@ import { ref } from "vue";
 import { RouterLink, useRoute, useRouter } from "vue-router";
 import Modal from "./Modal.vue";
 import { uid } from "uid";
-
 const savedCities = ref([]);
 const route = useRoute();
 const router = useRouter();
-
 const addCity = () => {
   if (localStorage.getItem("savedCities")) {
     savedCities.value = JSON.parse(localStorage.getItem("savedCities"));
   }
-
   const locationObj = {
     id: uid(),
     state: route.params.state,
@@ -82,13 +79,11 @@ const addCity = () => {
   };
   savedCities.value.push(locationObj);
   localStorage.setItem("savedCities", JSON.stringify(savedCities.value));
-
   let query = Object.assign({}, route.query);
   delete query.preview;
   query.id = locationObj.id;
   router.replace({ query });
 };
-
 const modalActive = ref(null);
 const toggleModal = () => {
   modalActive.value = !modalActive.value;

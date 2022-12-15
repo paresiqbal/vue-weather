@@ -13,13 +13,10 @@ import axios from "axios";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import CityCard from "./CityCard.vue";
-
 const savedCities = ref([]);
-
 const getCities = async () => {
   if (localStorage.getItem("savedCities")) {
     savedCities.value = JSON.parse(localStorage.getItem("savedCities"));
-
     const requests = [];
     savedCities.value.forEach((city) => {
       requests.push(
@@ -28,16 +25,13 @@ const getCities = async () => {
         )
       );
     });
-
     const weatherData = await Promise.all(requests);
-
     weatherData.forEach((value, index) => {
       savedCities.value[index].weather = value.data;
     });
   }
 };
 await getCities();
-
 const router = useRouter();
 const goToCityView = (city) => {
   router.push({
